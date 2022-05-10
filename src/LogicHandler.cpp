@@ -94,7 +94,6 @@ int LogicHandler::LogicLoop() {
             (_bunnyList.size() / 2),
             std::mt19937{ std::random_device{}() });
     }
-
     for (shared_ptr<Bunny> const i : toKill) {
         cout << i->getName() << " has died!\n";
         _bunnyList.remove(i);
