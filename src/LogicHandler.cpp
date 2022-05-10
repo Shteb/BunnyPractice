@@ -53,7 +53,7 @@ int LogicHandler::LogicLoop() {
                 if (i->getIsMale() && i->getAge() >= 2) {
                     agedMalePresent = true;
                 }
-                else if (agedMalePresent && i->getAge() >= 2) {
+                else if (i->getAge() >= 2) {
                     childColours.push_back(i->getColour());
                 }
             }
@@ -78,9 +78,12 @@ int LogicHandler::LogicLoop() {
     }
 
     //Birth handling
-    for (auto i : childColours) {
-        cout << addChild(i) << " was born!\n";
+    if (agedMalePresent) {
+        for (auto i : childColours) {
+            cout << addChild(i) << " was born!\n";
+        }
     }
+
 
     //Kill handling
     if (_bunnyList.size() > 1000) { //Food shortage, randomly selects half and culls them.
