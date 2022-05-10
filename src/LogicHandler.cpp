@@ -22,7 +22,7 @@ LogicHandler::LogicHandler() {
 
     //Initial report
     for (auto const& i : _bunnyList) {
-        cout << i->getName() << ", " << i->getGenderString() << ", " << i->getColourString() << ", " << i->getAge() << ", " << i->getIsInfectedString() << ".\n";
+        cout << "Name: " << i->getName() << ", Gender: " << i->getGenderString() << ", Coat: " << i->getColourString() << ", Age: " << i->getAge() << ", Health: " << i->getIsInfectedString() << ".\n";
     }
     system("pause");
 }
@@ -106,7 +106,7 @@ int LogicHandler::LogicLoop() {
 
     //Console out.
     for (auto const& i : _bunnyList) {
-        cout << i->getName() << ", " << i->getGenderString() << ", " << i->getColourString() << ", " << i->getAge() << ", " << i->getIsInfectedString() << ".\n";
+        cout << "Name: " << i->getName() << ", Gender: " << i->getGenderString() << ", Coat: " << i->getColourString() << ", Age: " << i->getAge() << ", Health: " << i->getIsInfectedString() << ".\n";
     }
 
     //User input
