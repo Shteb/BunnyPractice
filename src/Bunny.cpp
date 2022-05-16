@@ -2,7 +2,7 @@
 
 
 Bunny::Bunny(bool isMaleIn, Colour colourIn, int ageIn) {
-    getFullName();
+    genFullName();
     _isMale = isMaleIn;
     _colour = colourIn;
     _age = ageIn;
@@ -18,7 +18,7 @@ string Bunny::getName() {
     return _name;
 }
 
-void Bunny::getFullName() {
+void Bunny::genFullName() {
     _name = "";
 
     switch (rand() % 20)

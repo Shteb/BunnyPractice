@@ -34,10 +34,10 @@ string LogicHandler::addChild(Colour colourIn) {
 }
 
 int LogicHandler::LogicLoop() {
-    static list<shared_ptr<Bunny>> toKill = {};
-    static list<shared_ptr<Bunny>> toInfect = {};
-    static int infectedCount = 0;
-    static bool agedMalePresent = false;
+    list<shared_ptr<Bunny>> toKill = {};
+    list<shared_ptr<Bunny>> toInfect = {};
+    int infectedCount = 0;
+    bool agedMalePresent = false;
     list<Colour> childColours = {};
 
     //iterate through all bunnies, extract information and perform logic.
@@ -50,10 +50,10 @@ int LogicHandler::LogicLoop() {
         //gender check.
         if (i->getAge() >= 2) {
             if (!i->getIsInfected()) {
-                if (i->getIsMale() && i->getAge() >= 2) {
+                if (i->getIsMale()) {
                     agedMalePresent = true;
                 }
-                else if (i->getAge() >= 2) {
+                else {
                     childColours.push_back(i->getColour());
                 }
             }
@@ -63,7 +63,6 @@ int LogicHandler::LogicLoop() {
         if (i->getIsInfected()) {
             infectedCount++;
         }
-
     }
 
     //Infect handling
@@ -84,7 +83,6 @@ int LogicHandler::LogicLoop() {
         }
     }
 
-
     //Kill handling
     if (_bunnyList.size() > 1000) { //Food shortage, randomly selects half and culls them.
         std::sample(
@@ -98,11 +96,6 @@ int LogicHandler::LogicLoop() {
         cout << i->getName() << " has died!\n";
         _bunnyList.remove(i);
     }
-
-    //Clear static lists for next loop.
-    toKill.clear();
-    toInfect.clear();
-    childColours.clear();
 
     //Console out.
     for (auto const& i : _bunnyList) {

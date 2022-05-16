@@ -4,14 +4,13 @@
 using std::string;
 
 class Bunny {
-protected:
     string _name;
     bool _isMale;
     Colour _colour;
     int _age;
     bool _isInfected;
 
-    void getFullName();
+    void genFullName();
 public:
     explicit Bunny(bool isMale, Colour colour, int age);
     string getName();
