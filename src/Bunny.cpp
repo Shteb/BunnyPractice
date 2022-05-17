@@ -253,8 +253,11 @@ string Bunny::getIsInfectedString() {
     }
 }
 
-bool Bunny::growOld() {
+void Bunny::growOld() {
     _age++;
+}
+
+bool Bunny::checkAgeDeath() {
     if (_age >= 10 && !_isInfected) {
         return true;
     }

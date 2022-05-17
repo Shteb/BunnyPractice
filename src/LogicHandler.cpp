@@ -21,9 +21,7 @@ LogicHandler::LogicHandler() {
     _bunnyList.sort(lessThanKey());
 
     //Initial report
-    for (auto const& i : _bunnyList) {
-        cout << "Name: " << i->getName() << ", Gender: " << i->getGenderString() << ", Coat: " << i->getColourString() << ", Age: " << i->getAge() << ", Health: " << i->getIsInfectedString() << ".\n";
-    }
+    doReport();
     system("pause");
 }
 
@@ -32,6 +30,14 @@ string LogicHandler::addChild(Colour colourIn) {
     _bunnyList.push_back(toReturn);
     return toReturn->getName();
 }
+
+void LogicHandler::doReport() {
+    for (auto const& i : _bunnyList) {
+        cout << "Name: " << i->getName() << ", Gender: " << i->getGenderString() << ", Coat: " << i->getColourString() << ", Age: " << i->getAge() << ", Health: " << i->getIsInfectedString() << ".\n";
+    }
+}
+
+
 
 int LogicHandler::LogicLoop() {
     list<shared_ptr<Bunny>> toKill = {};
@@ -42,12 +48,13 @@ int LogicHandler::LogicLoop() {
 
     //iterate through all bunnies, extract information and perform logic.
     for (auto const& i : _bunnyList) {
-        //age check
-        if (i->growOld()) { //age and add dead bunnies to kill list.
+        //age and add dead bunnies to kill list.
+        i->growOld();
+        if (i->checkAgeDeath()) {
             toKill.push_front(i);
         }
 
-        //gender check.
+        //check gender and maturity and set flags for birth later.
         if (i->getAge() >= 2) {
             if (!i->getIsInfected()) {
                 if (i->getIsMale()) {
@@ -66,7 +73,7 @@ int LogicHandler::LogicLoop() {
     }
 
     //Infect handling
-    std::sample( //randomly select n bunnies and infect them.
+    std::sample( //randomly select n bunnies and infect them, where n = infectedCount.
         _bunnyList.begin(),
         _bunnyList.end(),
         std::back_inserter(toInfect),
@@ -77,14 +84,14 @@ int LogicHandler::LogicLoop() {
     }
 
     //Birth handling
-    if (agedMalePresent) {
+    if (agedMalePresent) { //If mature male flag is true, add a child of every colour of mature female.
         for (auto i : childColours) {
             cout << addChild(i) << " was born!\n";
         }
     }
 
     //Kill handling
-    if (_bunnyList.size() > 1000) { //Food shortage, randomly selects half and culls them.
+    if (_bunnyList.size() > 1000) { //Food shortage, randomly samples half and adds them to kill list.
         std::sample(
             _bunnyList.begin(),
             _bunnyList.end(),
@@ -92,18 +99,21 @@ int LogicHandler::LogicLoop() {
             (_bunnyList.size() / 2),
             std::mt19937{ std::random_device{}() });
     }
-    for (shared_ptr<Bunny> const i : toKill) {
+    for (shared_ptr<Bunny> const i : toKill) { //Executes killing on all bunnys in kill list.
         cout << i->getName() << " has died!\n";
         _bunnyList.remove(i);
     }
 
     //Console out.
-    for (auto const& i : _bunnyList) {
-        cout << "Name: " << i->getName() << ", Gender: " << i->getGenderString() << ", Coat: " << i->getColourString() << ", Age: " << i->getAge() << ", Health: " << i->getIsInfectedString() << ".\n";
-    }
+    doReport();
 
-    //User input
+    //Wait for user input
     system("pause");
     cout << "\n";
+
+    //Exit of all bunnies dead
+    if (_bunnyList.size() == 0) {
+        return 0;
+    }
     return 1;
 }

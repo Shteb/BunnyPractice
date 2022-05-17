@@ -18,6 +18,7 @@ protected:
     list<shared_ptr<Bunny>> _bunnyList;
 
     string addChild(Colour colourIn); //Adds a child of age 0, mothers colour.
+    void doReport();
 public:
     LogicHandler();
     int LogicLoop();

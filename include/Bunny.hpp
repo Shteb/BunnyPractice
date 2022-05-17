@@ -22,5 +22,6 @@ public:
     bool getIsInfected();
     void setIsInfected();
     string getIsInfectedString();
-    bool growOld(); //increment age and return a bool as to whether the bunny is dead. true for dead, false for alive.
+    void growOld(); //increment age and return a bool as to whether the bunny is dead. true for dead, false for alive.
+    bool checkAgeDeath();
 };

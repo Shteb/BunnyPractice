@@ -10,4 +10,7 @@ int main() {
     //being logic handler while loop here
     while (logicHan.LogicLoop()) {
     }
+    cout << "All bunnies have perished to the infection.\n\nPress enter to exit.\n\n";
+    std::string userIn;
+    cin >> userIn;
 }
